@@ -11,7 +11,7 @@ public class Region
     {
         Id = id;
         Name = name;
-        ShortName = name;
+        ShortName = shortName;
         CountryCodes = countryCodes;
     }
 }

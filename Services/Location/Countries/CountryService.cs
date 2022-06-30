@@ -1,6 +1,6 @@
 ﻿using Domain.Location.Countries;
 using Domain.Services.Location.Countries;
-using Services.Location.Repository;
+using Services.Location.Countries.Repository;
 using Tools.Types;
 
 namespace Services.Location.Countries;
@@ -39,8 +39,12 @@ public class CountryService : ICountriesService
 
         return Result.Succes();
     }
+    public Country[] GetCountriesByCodes(CountryCode[] codes) => _repository.GetCountriesByCodes(codes);
+    
+    public Country? GetCountryByName(String name) => _repository.GetCountryByName(name);
 
     public Country? GetCountry(CountryCode countryCode) => _repository.GetCountry(countryCode);
 
-    public Page<Country> GetCountriesPage(Int32 page, Int32 countInPage, String searchText) => _repository.GetCountriesPage(page, countInPage, searchText);
+    public Page<Country> GetCountriesPage(Int32 page, Int32 countInPage, String searchText) =>
+        _repository.GetCountriesPage(page, countInPage, searchText);
 }

@@ -3,6 +3,7 @@ using Npgsql;
 using Tools.Database;
 using Tools.Types;
 
+namespace Services.Location.Regions.Repository;
 public class RegionRepository
 {
     public void SaveRegion(RegionBlank regionBlank)
@@ -51,17 +52,18 @@ public class RegionRepository
         });
     }
 
-    public Page<Region> GetRegionsPage(Int32 page, Int32 countInPage)
+    public Page<Region> GetRegionsPage(Int32 page, Int32 countInPage, String searchingText)
     {
-        List<Region> regions = new List<Region>();
-
-        Int32 totalCount = 0;
-
-        DatabaseUtils.UseSqlCommand(command =>
+        return DatabaseUtils.UseSqlCommand(command =>
         {
-            command.CommandText = "Select id, name, short_name, country_code, count(*) over() as count " +
-                                    "from regions where is_removed = false order by name limit @p_countInPage offset @p_page";
+            List<Region> regions = new List<Region>();
+            Int32 totalCount = 0;
 
+            command.CommandText = "Select id, name, short_name, country_code, count(*) over() as count " +
+                                    "from regions where (name ilike @p_searchingText or short_name ilike @p_searchingText) " +
+                                    "and is_removed = false order by name limit @p_countInPage offset @p_page";
+            
+            command.Parameters.AddWithValue("p_searchingText", $"%{searchingText}%");
             command.Parameters.AddWithValue("p_countInPage", countInPage);
             command.Parameters.AddWithValue("p_page", (page - 1) * countInPage);
 
@@ -72,7 +74,8 @@ public class RegionRepository
                 totalCount = Convert.ToInt32(reader["count"]);
                 regions.Add(RegionMapper.ToRegion(reader));
             }
+
+            return new Page<Region>(regions.ToArray(), totalCount);
         });
-        return new Page<Region>(regions.ToArray(), totalCount);
     }
 }

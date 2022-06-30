@@ -2,6 +2,7 @@
 using Domain.Location.Regions;
 using Npgsql;
 
+namespace Services.Location.Regions.Repository;
 public class RegionMapper
 {
     public static Region ToRegion(NpgsqlDataReader reader)

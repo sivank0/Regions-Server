@@ -26,8 +26,8 @@ public class HomeController : Controller
     [HttpGet("GetCountriesPage")]
     public Page<Country> GetCountriesPage(Int32 page, Int32 countInPage, String searchText) => _countryService.GetCountriesPage(page, countInPage, searchText);
     
-    [HttpPost("SaveRegion")]
-    public Result SaveRegion([FromBody] RegionBlank regionBlank) => _regionService.SaveRegion(regionBlank);
+    [HttpGet("SaveRegion")]
+    public Result SaveRegion([FromQuery] RegionBlank regionBlank) => _regionService.SaveRegion(regionBlank);
 
     [HttpGet("RemoveRegion")]
     public Result RemoveRegion([FromQuery] Guid id) => _regionService.RemoveRegion(id);
@@ -36,7 +36,7 @@ public class HomeController : Controller
     public Region? GetRegion(Guid id) => _regionService.GetRegion(id);
 
     [HttpGet("GetRegionsPage")]
-    public Page<Region> GetRegionsPage(Int32 page, Int32 countInPage) => _regionService.GetRegionsPage(page, countInPage);
+    public Page<Region> GetRegionsPage(Int32 page, Int32 countInPage, String searchingText) => _regionService.GetRegionsPage(page, countInPage, searchingText);
 
 
     public HomeController(ILogger<HomeController> logger)
