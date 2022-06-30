@@ -1,0 +1,17 @@
+папка domain (countries(models(interface countryBlank))) ☼, countries (countryEditor ☼, countryList)
+сделать обертку над инпутом(value: string | null, onChange(value: string)), inputText, inputNumber
+display flex сделать
+routing editor 
+
+
+(prevState) => ({...prevState, sum: prevState.sum + 1})
+
+modalOpen =>  modalIsOpen ☼
+добавить метод fromCountry в интерфейс CountryBlank ☼
+window.location => проверка по параметрам ☼
+searchString => searchText и перенести в PaginationState ☼ 
+like => ilike ☼
+errors[], result в state не надо ☼
+количество элементов на странице в селект ☼
+NavLink добавление страны перенести ☼
+в Редактировании дата основания ☼
